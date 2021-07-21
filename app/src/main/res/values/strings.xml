@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Note it</string>
+    <string name="add_note_content_description">Add note</string>
+    <string name="text_when_title_empty">Untitled</string>
+</resources>
