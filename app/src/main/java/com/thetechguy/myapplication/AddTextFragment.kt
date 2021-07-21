@@ -101,7 +101,7 @@ class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
         if(edit_text_view_title.text.toString() != ""  && edit_text_view_text.text.toString() != "" )
         {
-            viewModel.insertNote(Note(0, edit_text_view_text.text.toString(), edit_text_view_text.text.toString()))
+            viewModel.insertNote(Note(0, edit_text_view_title.text.toString(), edit_text_view_text.text.toString()))
             savedOrNot = 1
             Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
         }

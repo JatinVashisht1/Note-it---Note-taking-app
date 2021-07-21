@@ -2,19 +2,28 @@ package com.thetechguy.myapplication
 
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.BundleCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.savedstate.SavedStateRegistry
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_view_note.*
 
 
@@ -27,6 +36,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
     val viewModel: MainViewModel by activityViewModels()
      var sbt = false
      var checked = 0
+    lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var navController: NavController
 
 
 
@@ -46,6 +57,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                 0
             }
         }
+
+
 
 
 
@@ -75,6 +88,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
         fragment_home_toolbar.inflateMenu(R.menu.fragment_home_menu)
         fragment_home_toolbar.title = "Note it"
+        nav_view.setupWithNavController(NavController(requireContext()))
+        fragment_home_toolbar.setNavigationIcon(R.drawable.ic_hamburger)
+        fragment_home_toolbar.setNavigationOnClickListener{
+            drawer_layout.openDrawer(Gravity.LEFT)
+        }
+
+
+
+
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.homeFragment),
+            drawer_layout
+        )
+
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = NoteRecyclerViewAdapter(requireContext(), this)
@@ -101,12 +129,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                             // Respond to item chosen
 
                            checked = which
-                            sbt = if(checked==1){
-                                true
-                            }
-                            else{
-                                false
-                            }
+                            sbt = checked==1
 
                         }
                         .setNeutralButton("cancel") { _, _ ->
@@ -140,6 +163,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                         }
                         .show()
 
+
+                }
+
+                R.id.privacy_policy ->{
 
                 }
             }
