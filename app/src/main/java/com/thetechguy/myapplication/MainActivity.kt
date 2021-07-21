@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //        menu?.findItem(R.id.settingsFragment)?.isEnabled = navHostFragment.childFragmentManager.fragments[0] !is SettingsFragment
-
+        println("this is second commit change")
         return true
     }
 
