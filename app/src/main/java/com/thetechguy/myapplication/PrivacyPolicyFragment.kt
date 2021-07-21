@@ -37,8 +37,18 @@ class PrivacyPolicyFragment : Fragment(R.layout.fragment_privacy_policy){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        text_view_privacy_policy.text = "This document describes data collected and processed by the \"Note it\" app. " +
-                "By using the app, user consents to the privacy policy"
+        fragment_privacy_policy_toolbar.setNavigationIcon(R.drawable.ic_back)
+        fragment_privacy_policy_toolbar.setNavigationOnClickListener{
+            val action = PrivacyPolicyFragmentDirections.actionPrivacyPolicyFragmentToHomeFragment2()
+            findNavController().navigate(action)
+        }
+
+        text_view_privacy_policy.text = "This document describes data collected and processed by the \"Notepad Free\" app and third party software. By using the app, user consents to the privacy policy.\n" +
+                "\n" +
+                "1. Notes\n" +
+                "\n" +
+                "All of the notes that user creates are stored in the app's internal storage. The notes can't be accessed by any other app on the phone. The only way to access the notes is to use the app. To be clear: only user of the app can see notes stored on the phone. Although this document may seem long, that (in the author's opinion) is the most important information.\n" +
+                "Since the 1.7.0 version, the app uses Google device backup copy, if it's turned on in the device's and the app's settings. In that case an encrypted copy of notes is stored on Google Drive. It can be changed by a user at any time. More information is available on Google'"
 
             /*
             This document describes data collected and processed by the "Notepad Free" app and third party software. By using the app, user consents to the privacy policy.

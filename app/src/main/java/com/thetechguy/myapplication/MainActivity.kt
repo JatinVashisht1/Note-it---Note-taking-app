@@ -3,10 +3,7 @@ package com.thetechguy.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -15,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -42,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             else {
                 toolbar.visibility = View.GONE
+
 
             }
 
@@ -96,7 +95,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    fun onClickPrivacyPolicy(item: MenuItem) {
 
+        val action = HomeFragmentDirections.actionHomeFragmentToPrivacyPolicyFragment()
+        navController.navigate(action)
+        drawer_layout.closeDrawer(Gravity.LEFT)
+
+    }
 
 
 }

@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_view_text_toolbar"
+        android:id="@+id/fragment_privacy_policy_toolbar"
         android:background="@color/teal_200"
         app:title="Note it"
         app:titleTextColor="@color/white"

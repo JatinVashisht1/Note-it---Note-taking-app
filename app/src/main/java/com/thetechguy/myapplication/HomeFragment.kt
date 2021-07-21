@@ -166,9 +166,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
                 }
 
-                R.id.privacy_policy ->{
-
-                }
+//                R.id.privacy_policy ->{
+//                    val action = HomeFragmentDirections.actionHomeFragmentToPrivacyPolicyFragment()
+//                    findNavController().navigate(action)
+//                }
             }
             true
         }

@@ -4,8 +4,9 @@
 
     <item
         android:title="Privacy Policy"
-        android:id="@+id/privacy_policy"/>
-
+        android:id="@+id/privacy_policy"
+        android:onClick="onClickPrivacyPolicy"
+        />
 
 
 
