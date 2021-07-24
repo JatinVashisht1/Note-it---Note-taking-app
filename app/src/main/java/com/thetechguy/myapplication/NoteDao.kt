@@ -23,4 +23,7 @@ interface NoteDao {
 
     @Update
     suspend fun updateNote(note: Note)
+
+    @Delete
+    suspend fun deleteSelectedNotes(note: List<Note>)
 }

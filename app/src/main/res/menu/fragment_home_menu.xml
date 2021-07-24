@@ -8,6 +8,19 @@
         />
 
 
+    <item android:id="@+id/linear_or_grid"
+        android:title="view by"
+        android:icon="@drawable/ic_grid"
+        app:showAsAction="always" />
+
+
+
+ <item android:id="@+id/deleteSelected"
+        android:title="view by"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always" />
+
+
 
 
 

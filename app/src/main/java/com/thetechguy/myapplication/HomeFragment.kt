@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.savedstate.SavedStateRegistry
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,62 +30,22 @@ import kotlinx.android.synthetic.main.fragment_view_note.*
 
 const val KEY_SBT = "SBT key"
 
+
+
 class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
-
-
     val viewModel: MainViewModel by activityViewModels()
-     var sbt = false
      var checked = 0
     lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var navController: NavController
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(savedInstanceState==null)
-        {
-            sbt = false
-            checked = 0
         }
-        else if (savedInstanceState != null){
-            sbt = savedInstanceState.getBoolean(KEY_SBT)
-            checked = if(sbt){
-                1
-            }else{
-                0
-            }
-        }
-
-
-
-
-
-    }
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-
-
-        if(savedInstanceState==null)
-        {
-            sbt = false
-            checked = 0
-        }
-        else if (savedInstanceState != null){
-            sbt = savedInstanceState.getBoolean(KEY_SBT)
-            checked = if(sbt){
-                1
-            }else{
-                0
-            }
-        }
-
 
         fragment_home_toolbar.inflateMenu(R.menu.fragment_home_menu)
         fragment_home_toolbar.title = "Note it"
@@ -94,17 +55,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             drawer_layout.openDrawer(Gravity.LEFT)
         }
 
-
-
-
-
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeFragment),
             drawer_layout
         )
 
-
+        if(!grid_or_not)
+        {
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        }
+        else if(grid_or_not){
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
+        }
         val adapter = NoteRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
 
@@ -113,24 +76,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             findNavController().navigate(action)
         }
 
-
         fragment_home_toolbar.setOnMenuItemClickListener{
             when(it.itemId)
             {
                 R.id.sort_by -> {
-
                     val arr = arrayOf("Date Created (Newest First)","Title (A-Z) ")
-
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Sort By")
-
                         // Single-choice items (initialized with checked item)
                         .setSingleChoiceItems(arr, checked) { dialog, which ->
                             // Respond to item chosen
-
                            checked = which
                             sbt = checked==1
-
                         }
                         .setNeutralButton("cancel") { _, _ ->
                             // Respond to neutral button press
@@ -141,9 +98,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                             {
                                 viewModel.allNotesByTitle.observe(viewLifecycleOwner, Observer {
                                     it?.let{
-
                                         adapter.updateList(it)
-
                                     }
                                 })
 
@@ -158,13 +113,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                                     }
                                 })
                             }
-
-
                         }
                         .show()
-
-
                 }
+
+                R.id.linear_or_grid ->{
+                    if(grid_or_not){
+                        it.setIcon(R.drawable.ic_grid)
+                        recyclerView.layoutManager = LinearLayoutManager(context)
+                        grid_or_not = false
+                    }
+                    else if(!grid_or_not){
+                        it.setIcon(R.drawable.ic_linear)
+                        recyclerView.layoutManager = GridLayoutManager(context, 2)
+                        grid_or_not = true
+                    }
+                }
+
+//                R.id.deleteSelected -> {
+//                    viewModel.deleteSelectedNotes(checkedNote.toList())
+//                }
 
 //                R.id.privacy_policy ->{
 //                    val action = HomeFragmentDirections.actionHomeFragmentToPrivacyPolicyFragment()
@@ -174,19 +142,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             true
         }
 
-
-
         if(!sbt)
         {
             viewModel.allNotes.observe(viewLifecycleOwner, Observer{
-
                 it?.let {
-
-
                     adapter.updateList(it) //? will check for whether the list is null or not
-
-
-
                 }
 
             })
@@ -197,17 +157,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
                 it?.let {
 
-
                     adapter.updateList(it) //? will check for whether the list is null or not
-
-
 
                 }
 
             })
         }
-
-
 
         delete_all_note.setOnClickListener{
             val builder = AlertDialog.Builder(requireContext())
@@ -237,11 +192,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             alertDialog.show()
 
         }
-            }
 
-    override fun onItemClick(note: Note) {
-        viewModel.deleteNote(note)
-    }
+
+}
 
     override fun navigateToViewText(note: Note) {
             val action = HomeFragmentDirections.actionHomeFragmentToViewTextFragment(note)

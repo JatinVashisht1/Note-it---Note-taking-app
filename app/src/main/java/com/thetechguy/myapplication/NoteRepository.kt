@@ -27,4 +27,9 @@ class NoteRepository (private val noteDao: NoteDao) {
     {
         noteDao.updateNote(note)
     }
+
+    suspend fun deleteSelectedNotes(note:List<Note>)
+    {
+        noteDao.deleteSelectedNotes(note)
+    }
 }

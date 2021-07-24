@@ -42,4 +42,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
+    fun deleteSelectedNotes(note: List<Note>) = viewModelScope.launch (Dispatchers.IO) {
+        repository.deleteSelectedNotes(note)
+    }
+
 }
