@@ -46,4 +46,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository.deleteSelectedNotes(note)
     }
 
+    fun onNoteSwiped(note: Note) = viewModelScope.launch (Dispatchers.IO) {
+        repository.delete(note)
+    }
+
 }

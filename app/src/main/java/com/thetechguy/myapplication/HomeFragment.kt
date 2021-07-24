@@ -19,13 +19,16 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.savedstate.SavedStateRegistry
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_view_note.*
+import java.nio.channels.spi.SelectorProvider
 
 
 const val KEY_SBT = "SBT key"
@@ -55,6 +58,27 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             drawer_layout.openDrawer(Gravity.LEFT)
         }
 
+
+        val adapter = NoteRecyclerViewAdapter(requireContext(), this)
+        recyclerView.adapter = adapter
+
+
+        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0 , ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val note = adapter.notes[viewHolder.adapterPosition]
+                viewModel.onNoteSwiped(note)
+            }
+
+        }).attachToRecyclerView(recyclerView)
+
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeFragment),
             drawer_layout
@@ -68,8 +92,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
         else if(grid_or_not){
             recyclerView.layoutManager = GridLayoutManager(context, 2)
         }
-        val adapter = NoteRecyclerViewAdapter(requireContext(), this)
-        recyclerView.adapter = adapter
+
 
         addNote.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddTextFragment()
@@ -130,14 +153,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                     }
                 }
 
-//                R.id.deleteSelected -> {
-//                    viewModel.deleteSelectedNotes(checkedNote.toList())
-//                }
-
-//                R.id.privacy_policy ->{
-//                    val action = HomeFragmentDirections.actionHomeFragmentToPrivacyPolicyFragment()
-//                    findNavController().navigate(action)
-//                }
             }
             true
         }
