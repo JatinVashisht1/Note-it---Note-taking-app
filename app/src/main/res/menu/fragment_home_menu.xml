@@ -18,7 +18,14 @@
  <item android:id="@+id/deleteSelected"
         android:title="view by"
         android:icon="@drawable/ic_delete"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
+
+    <item
+        android:title="Delete All Notes"
+        android:id="@+id/delete_all_notes"
+        android:icon="@drawable/ic_delete_all"
+
+        />
 
 
 

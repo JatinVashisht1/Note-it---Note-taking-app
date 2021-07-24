@@ -84,13 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun onClickCheckBox(view: View) {
-       if(a.isSelected){
-           val a = findViewById<CheckBox>(R.id.check_note)
-           a.visibility = View.GONE
-           a.isSelected = false
-       }
-    }
+
 
 
 }

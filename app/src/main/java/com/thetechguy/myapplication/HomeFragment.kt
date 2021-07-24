@@ -1,6 +1,8 @@
 package com.thetechguy.myapplication
 
 
+import android.graphics.Color
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -56,11 +58,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
         fragment_home_toolbar.title = "Note it"
         nav_view.setupWithNavController(NavController(requireContext()))
         fragment_home_toolbar.setNavigationIcon(R.drawable.ic_hamburger)
+        fragment_home_toolbar.navigationIcon?.colorFilter = ColorFilter()
         fragment_home_toolbar.setNavigationOnClickListener{
             drawer_layout.openDrawer(Gravity.LEFT)
         }
 
 
+
+        if(isSelectedModeOn){
+            fragment_home_toolbar.menu.findItem(R.id.deleteSelected).isVisible = true
+        }
 
         adapter = NoteRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
@@ -158,8 +165,40 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
                 R.id.deleteSelected -> {
                     isSelectedModeOn = false
-
+                    if(checkedNotesToDelete.isEmpty()){
+                        Toast.makeText(context, "Select an item to delete", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(checkedNotesToDelete.isNotEmpty()){
                     viewModel.deleteSelectedNotes(checkedNotesToDelete.toList())
+                    }
+                }
+
+                R.id.delete_all_notes ->{
+                    val builder = AlertDialog.Builder(requireContext())
+                    //set title for alert dialog
+                    builder.setTitle("Alert")
+                    //set message for alert dialog
+                    builder.setMessage("Are you sure you want to delete all notes ?")
+                    builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                    //performing positive action
+                    builder.setPositiveButton("Yes") { dialogInterface, which ->
+                        viewModel.deleteAll()
+                        Toast.makeText(context, "Deleted all notes !", Toast.LENGTH_SHORT).show()
+                    }
+                    //performing cancel action
+                    builder.setNeutralButton("Cancel") { dialogInterface, which ->
+
+                    }
+                    //performing negative action
+                    builder.setNegativeButton("No") { dialogInterface, which ->
+
+                    }
+                    // Create the AlertDialog
+                    val alertDialog: AlertDialog = builder.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(true)
+                    alertDialog.show()
                 }
 
             }
@@ -188,34 +227,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             })
         }
 
-        delete_all_note.setOnClickListener{
-            val builder = AlertDialog.Builder(requireContext())
-            //set title for alert dialog
-            builder.setTitle("Alert")
-            //set message for alert dialog
-            builder.setMessage("Are you sure you want to delete all notes ?")
-            builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-            //performing positive action
-            builder.setPositiveButton("Yes") { dialogInterface, which ->
-                viewModel.deleteAll()
-                Toast.makeText(context, "Deleted all notes !", Toast.LENGTH_SHORT).show()
-            }
-            //performing cancel action
-            builder.setNeutralButton("Cancel") { dialogInterface, which ->
-
-            }
-            //performing negative action
-            builder.setNegativeButton("No") { dialogInterface, which ->
-
-            }
-            // Create the AlertDialog
-            val alertDialog: AlertDialog = builder.create()
-            // Set other dialog properties
-            alertDialog.setCancelable(true)
-            alertDialog.show()
-
-        }
 
 
 }

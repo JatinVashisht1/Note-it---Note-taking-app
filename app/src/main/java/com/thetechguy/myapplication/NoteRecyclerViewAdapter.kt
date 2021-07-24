@@ -3,13 +3,9 @@ package com.thetechguy.myapplication
 import android.content.Context
 import android.graphics.Color
 import android.os.strictmode.IntentReceiverLeakedViolation
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.*
+import android.widget.*
+import androidx.appcompat.widget.ResourceManagerInternal
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +27,7 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
         val textTitle : TextView= itemView.findViewById(R.id.text_view_card_title)
 //        val delete : ImageView = itemView.findViewById(R.id.delete_note)
         val card : CardView = itemView.findViewById(R.id.cardView)
-        val checkNote : CheckBox = itemView.findViewById(R.id.check_note)
+
 
 
 
@@ -46,7 +42,7 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
 //        }
 
         if(!isSelectedModeOn){
-            viewHolder.card.setCardBackgroundColor(Color.WHITE)
+            viewHolder.card.setCardBackgroundColor(Color.rgb(96,88,88))
         }
 
         viewHolder.card.setOnClickListener{
@@ -56,13 +52,13 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
                 {
                     isSelectedModeOn = false
                 }
-                viewHolder.card.setCardBackgroundColor(Color.WHITE)
+                viewHolder.card.setCardBackgroundColor(Color.rgb(96,88,88))
                 viewHolder.card.isSelected = false
             }
             else if(!viewHolder.card.isSelected && isSelectedModeOn){
                 viewHolder.card.isSelected = true
                 checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
-                viewHolder.card.setCardBackgroundColor(Color.CYAN)
+                viewHolder.card.setCardBackgroundColor(Color.rgb(1,135,134))
             }
             else{
 //                checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
@@ -75,16 +71,17 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
 
             if(viewHolder.card.isSelected){
 
+
                 checkedNotesToDelete.remove(notes[viewHolder.adapterPosition])
                 if(checkedNotesToDelete.isEmpty()){
                 isSelectedModeOn = false
                 }
-                viewHolder.card.setCardBackgroundColor(Color.WHITE)
+                viewHolder.card.setCardBackgroundColor(Color.rgb(96,88,88))
                 viewHolder.card.isSelected = false
             }
             else if(!viewHolder.card.isSelected){
                 isSelectedModeOn = true
-                viewHolder.card.setCardBackgroundColor(Color.CYAN)
+                viewHolder.card.setCardBackgroundColor(Color.rgb(1,135,134))
                 checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
                 viewHolder.card.isSelected = true
             }
@@ -105,7 +102,7 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
 //            checkedNote.add(notes[position])
 //        }
         if(!isSelectedModeOn){
-            holder.card.setCardBackgroundColor(Color.WHITE)
+            holder.card.setCardBackgroundColor(Color.rgb(96,88,88))
             if(checkedNotesToDelete.isEmpty()){
 //            holder.card.isSelected = false
             }
