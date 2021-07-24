@@ -1,26 +1,38 @@
 package com.thetechguy.myapplication
 
 import android.content.Context
+import android.graphics.Color
+import android.os.strictmode.IntentReceiverLeakedViolation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 
+    var a = Model()
+
+    var isSelectedModeOn = false
+    var checkedNotesToDelete = mutableSetOf<Note>()
 class NoteRecyclerViewAdapter(private val context: Context, private val listener: INotesRVAdapter) : RecyclerView.Adapter<NoteRecyclerViewAdapter.NoteViewHolder>() {
+
 
 //    lateinit var notes : MutableList<Note>
     val notes = ArrayList<Note>()
+
 //    lateinit var checkedListofNotes : List<Note>
+//    var notess = mutableListOf<Note>()
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val textTitle : TextView= itemView.findViewById(R.id.text_view_card_title)
 //        val delete : ImageView = itemView.findViewById(R.id.delete_note)
         val card : CardView = itemView.findViewById(R.id.cardView)
         val checkNote : CheckBox = itemView.findViewById(R.id.check_note)
+
 
 
     }
@@ -32,8 +44,52 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
 //            listener.onItemClick(notes[viewHolder.adapterPosition])
 
 //        }
+
+        if(!isSelectedModeOn){
+            viewHolder.card.setCardBackgroundColor(Color.WHITE)
+        }
+
         viewHolder.card.setOnClickListener{
-            listener.navigateToViewText(notes[viewHolder.adapterPosition])
+            if(viewHolder.card.isSelected && isSelectedModeOn){
+                checkedNotesToDelete.remove(notes[viewHolder.adapterPosition])
+                if(checkedNotesToDelete.isEmpty())
+                {
+                    isSelectedModeOn = false
+                }
+                viewHolder.card.setCardBackgroundColor(Color.WHITE)
+                viewHolder.card.isSelected = false
+            }
+            else if(!viewHolder.card.isSelected && isSelectedModeOn){
+                viewHolder.card.isSelected = true
+                checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
+                viewHolder.card.setCardBackgroundColor(Color.CYAN)
+            }
+            else{
+//                checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
+                listener.navigateToViewText(notes[viewHolder.adapterPosition])
+
+            }
+        }
+
+        viewHolder.card.setOnLongClickListener{
+
+            if(viewHolder.card.isSelected){
+
+                checkedNotesToDelete.remove(notes[viewHolder.adapterPosition])
+                if(checkedNotesToDelete.isEmpty()){
+                isSelectedModeOn = false
+                }
+                viewHolder.card.setCardBackgroundColor(Color.WHITE)
+                viewHolder.card.isSelected = false
+            }
+            else if(!viewHolder.card.isSelected){
+                isSelectedModeOn = true
+                viewHolder.card.setCardBackgroundColor(Color.CYAN)
+                checkedNotesToDelete.add(notes[viewHolder.adapterPosition])
+                viewHolder.card.isSelected = true
+            }
+
+            true
         }
 
 
@@ -43,10 +99,18 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentTitle = notes[position].title
+        val currentNote = notes[position]
         holder.textTitle.text = currentTitle
 //        if(holder.checkNote.isChecked){
 //            checkedNote.add(notes[position])
 //        }
+        if(!isSelectedModeOn){
+            holder.card.setCardBackgroundColor(Color.WHITE)
+            if(checkedNotesToDelete.isEmpty()){
+//            holder.card.isSelected = false
+            }
+        }
+
 
     }
 
@@ -58,7 +122,7 @@ class NoteRecyclerViewAdapter(private val context: Context, private val listener
     {
         notes.clear()
         notes.addAll(newList)
-
+        isSelectedModeOn = false
         notifyDataSetChanged()
     }
 }

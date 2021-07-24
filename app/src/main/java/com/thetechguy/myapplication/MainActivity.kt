@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
     var sbt = false
     var grid_or_not = false
+
 //    lateinit var checkedNote : MutableList<Note>
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -83,7 +85,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickCheckBox(view: View) {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
+       if(a.isSelected){
+           val a = findViewById<CheckBox>(R.id.check_note)
+           a.visibility = View.GONE
+           a.isSelected = false
+       }
     }
 
 

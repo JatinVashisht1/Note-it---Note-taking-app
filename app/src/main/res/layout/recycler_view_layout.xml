@@ -12,6 +12,7 @@
     android:id="@+id/cardView"
     app:cardBackgroundColor="@color/white"
     android:elevation="32sp"
+
     style="@style/Widget.MaterialComponents.CardView">
 <!--    android:background="#F1ECEC"-->
 
@@ -34,6 +35,7 @@
         android:layout_gravity="end|center_vertical"
         android:id="@+id/check_note"
         android:onClick="onClickCheckBox"
+        android:visibility="gone"
         />
 
 

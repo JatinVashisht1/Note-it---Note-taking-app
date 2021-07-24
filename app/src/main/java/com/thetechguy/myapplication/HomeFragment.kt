@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.savedstate.SavedStateRegistry
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -41,6 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
      var checked = 0
     lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var navController: NavController
+    lateinit var adapter : NoteRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
         }
 
 
-        val adapter = NoteRecyclerViewAdapter(requireContext(), this)
+
+        adapter = NoteRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
 
 
@@ -153,6 +156,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                     }
                 }
 
+                R.id.deleteSelected -> {
+                    isSelectedModeOn = false
+
+                    viewModel.deleteSelectedNotes(checkedNotesToDelete.toList())
+                }
+
             }
             true
         }
@@ -212,6 +221,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 }
 
     override fun navigateToViewText(note: Note) {
+        if(a.isSelected){
+
+        }
             val action = HomeFragmentDirections.actionHomeFragmentToViewTextFragment(note)
             findNavController().navigate(action)
     }
