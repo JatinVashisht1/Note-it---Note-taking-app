@@ -170,6 +170,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                     }
                     else if(checkedNotesToDelete.isNotEmpty()){
                     viewModel.deleteSelectedNotes(checkedNotesToDelete.toList())
+                        checkedNotesToDelete.clear()
                     }
                 }
 
@@ -184,6 +185,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                     //performing positive action
                     builder.setPositiveButton("Yes") { dialogInterface, which ->
                         viewModel.deleteAll()
+                        isSelectedModeOn = false
+                        checkedNotesToDelete.clear()
                         Toast.makeText(context, "Deleted all notes !", Toast.LENGTH_SHORT).show()
                     }
                     //performing cancel action
