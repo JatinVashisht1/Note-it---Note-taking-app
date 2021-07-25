@@ -26,4 +26,10 @@ interface NoteDao {
 
     @Delete
     suspend fun deleteSelectedNotes(note: List<Note>)
+
+    @Query("SELECT * FROM  note_table WHERE category Like :categ")
+    fun getNotesByCategory(categ: String) : LiveData<List<Note>>
+
+    @Query("SELECT category FROM note_table")
+    fun getNoteCategory() : LiveData<List<String>>
 }

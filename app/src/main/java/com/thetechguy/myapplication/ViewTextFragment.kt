@@ -46,7 +46,7 @@ class ViewTextFragment : Fragment(R.layout.fragment_view_note){
             val text = edit_text_view_text_view.text.toString()
            if(title=="" && text!=""){
                title="Untitled"
-               viewModel.updateNote(Note(args.currentNote.id, title, text))
+               viewModel.updateNote(Note(args.currentNote.id, title, text, args.currentNote.category))
                Toast.makeText(context, "Note Updated", Toast.LENGTH_LONG).show()
            }
            if(title==""&&text==""){
@@ -54,7 +54,7 @@ class ViewTextFragment : Fragment(R.layout.fragment_view_note){
            }
            else if(title!="" || text !="")
            {
-               viewModel.updateNote(Note(args.currentNote.id, title, text))
+               viewModel.updateNote(Note(args.currentNote.id, title, text, args.currentNote.category))
                Toast.makeText(context, "Note Updated", Toast.LENGTH_LONG).show()
            }
 

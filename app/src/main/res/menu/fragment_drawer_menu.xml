@@ -8,6 +8,12 @@
         android:onClick="onClickPrivacyPolicy"
         />
 
+    <item
+        android:title="Add Category"
+        android:id="@+id/menu_add_category"
+        android:icon="@drawable/ic_add"
+        />
+
 
 
 

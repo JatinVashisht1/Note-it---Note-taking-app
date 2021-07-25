@@ -2,11 +2,19 @@ package com.thetechguy.myapplication
 
 import androidx.lifecycle.LiveData
 
-class NoteRepository (private val noteDao: NoteDao) {
 
+
+class NoteRepository (private val noteDao: NoteDao) {
 
     val allNotes: LiveData<List<Note>> = noteDao.getAllNotes()// View Model is observing this LiveData which is providing all notes (Data)
     val allNotesByTitle: LiveData<List<Note>> = noteDao.getAllNotesByTitle()// View Model is observing this LiveData which is providing all notes (Data)
+    val allNotesByCategory: LiveData<List<Note>> = noteDao.getNotesByCategory(cate)
+    val allNoteCategory : LiveData<List<String>> = noteDao.getNoteCategory()
+
+
+    fun getAllNotesByCategories(categ: String): LiveData<List<Note>> {
+       return  noteDao.getNotesByCategory(categ)
+    }
 
     suspend fun insert(note: Note)
     {
@@ -32,4 +40,6 @@ class NoteRepository (private val noteDao: NoteDao) {
     {
         noteDao.deleteSelectedNotes(note)
     }
+
+
 }

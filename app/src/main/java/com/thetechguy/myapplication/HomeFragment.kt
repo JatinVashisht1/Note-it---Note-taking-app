@@ -65,6 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
 
 
+
         if(isSelectedModeOn){
             fragment_home_toolbar.menu.findItem(R.id.deleteSelected).isVisible = true
         }
@@ -208,6 +209,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
             true
         }
 
+
+
         if(!sbt)
         {
             viewModel.allNotes.observe(viewLifecycleOwner, Observer{
@@ -231,9 +234,40 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
         }
 
 
+        viewModel.allNoteCategory.observe(viewLifecycleOwner, {
+            updateMenu(it)
+        })
+
+        nav_view.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.menu_add_category ->{
+
+                    val action = HomeFragmentDirections.actionHomeFragmentToAddCategoryFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+                else -> {
+                    cate = it.title.toString()
+                    val a = it.title.toString()
+                    viewModel.allNotesByCategory.observe(viewLifecycleOwner, {
+                        viewModel.getAllNotesByCategories(a)
+                    adapter.updateList(it)
+                    })
+                    true
+                }
+            }
+        }
 
 
 }
+
+    fun updateMenu(cate: List<String>)
+    {
+        for(i in cate)
+        {
+        nav_view.menu.add(i)
+        }
+    }
 
     override fun navigateToViewText(note: Note) {
         if(a.isSelected){
@@ -247,4 +281,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
         super.onSaveInstanceState(outState)
         outState.putBoolean(KEY_SBT,  sbt)
     }
+
+
 }

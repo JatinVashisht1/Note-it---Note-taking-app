@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+var cate: String = "default"
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val allNotes : LiveData<List<Note>>
     val allNotesByTitle : LiveData<List<Note>>
+    var allNotesByCategory: LiveData<List<Note>>
+    val allNoteCategory : LiveData<List<String>>
     private val repository: NoteRepository
 
     init {
@@ -19,6 +21,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository = NoteRepository(dao)
         allNotes = repository.allNotes
         allNotesByTitle = repository.allNotesByTitle
+        allNotesByCategory = repository.allNotesByCategory
+        allNoteCategory = repository.allNoteCategory
+    }
+
+    fun getAllNotesByCategories(categories: String){
+        cate = categories
+        allNotesByCategory  =  repository.getAllNotesByCategories(categories)
     }
 
     //in below case the everything that will be added or written will work under scope of coroutine in background thread

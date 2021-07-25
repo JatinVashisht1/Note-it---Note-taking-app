@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.fragment_add_note.*
 
 class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
-
-
     var savedOrNot = 0
 
     val viewModel: MainViewModel by activityViewModels()
@@ -44,10 +42,6 @@ class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
        }
 
-
-
-
-
     }
 
 
@@ -67,6 +61,7 @@ class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
         fragment_add_toolbar.title = "Note it"
 
+        edit_text_view_category.setText("default")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fragment_add_toolbar.setTitleTextColor(resources.getColor(R.color.white))
@@ -98,17 +93,27 @@ class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
     private fun insertNoteDefault()
     {
-
+        edit_text_view_title.text.toString().trim(' ')
+        edit_text_view_category.text.toString().trim(' ')
         if(edit_text_view_title.text.toString() != ""  && edit_text_view_text.text.toString() != "" )
         {
-            viewModel.insertNote(Note(0, edit_text_view_title.text.toString(), edit_text_view_text.text.toString()))
+            var categ = edit_text_view_category.text.toString()
+            if(edit_text_view_category.text.toString()=="" || edit_text_view_category.text.toString() == " "){
+                categ = "default"
+            }
+            viewModel.insertNote(Note(0, edit_text_view_title.text.toString(), edit_text_view_text.text.toString(), categ))
             savedOrNot = 1
             Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
         }
 
+
         else if(edit_text_view_title.text.toString() == "" && edit_text_view_text.text.toString() != "")
         {
-            viewModel.insertNote(Note(0, "Untitled", edit_text_view_text.text.toString()))
+            var categ = edit_text_view_category.text.toString()
+            if(edit_text_view_category.text.toString()=="" || edit_text_view_category.text.toString() == " "){
+                categ = "default"
+            }
+            viewModel.insertNote(Note(0, "Untitled", edit_text_view_text.text.toString(), categ))
             Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
             savedOrNot = 1
         }
@@ -119,7 +124,11 @@ class AddTextFragment : Fragment(R.layout.fragment_add_note){
 
             }
         else{
-            viewModel.insertNote(Note(0, edit_text_view_title.text.toString(), edit_text_view_text.text.toString()))
+            var categ = edit_text_view_category.text.toString()
+            if(edit_text_view_category.text.toString()=="" || edit_text_view_category.text.toString() == " "){
+                categ = "default"
+            }
+            viewModel.insertNote(Note(0, edit_text_view_title.text.toString(), edit_text_view_text.text.toString(), categ))
         Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
             savedOrNot = 1
         }
