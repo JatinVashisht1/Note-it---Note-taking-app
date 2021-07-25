@@ -26,7 +26,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAllNotesByCategories(categories: String){
-        cate = categories
+//        cate = categories
         allNotesByCategory  =  repository.getAllNotesByCategories(categories)
     }
 

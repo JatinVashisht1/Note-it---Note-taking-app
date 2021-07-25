@@ -235,7 +235,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
 
         viewModel.allNoteCategory.observe(viewLifecycleOwner, {
-            updateMenu(it)
+            val c = it.toSet()
+            updateMenu(c.toList())
         })
 
         nav_view.setNavigationItemSelectedListener {
@@ -247,12 +248,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
                     true
                 }
                 else -> {
-                    cate = it.title.toString()
+//                    cate = it.title.toString()
                     val a = it.title.toString()
                     viewModel.allNotesByCategory.observe(viewLifecycleOwner, {
                         viewModel.getAllNotesByCategories(a)
+                        viewModel.allNotesByCategory.observe(viewLifecycleOwner, {
                     adapter.updateList(it)
+                        })
                     })
+                    drawer_layout.closeDrawer(Gravity.LEFT)
                     true
                 }
             }
