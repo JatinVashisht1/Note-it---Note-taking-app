@@ -2,6 +2,7 @@ package com.thetechguy.myapplication
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -27,9 +28,8 @@ interface NoteDao {
     @Delete
     suspend fun deleteSelectedNotes(note: List<Note>)
 
-    @Query("SELECT * FROM  note_table WHERE category IS :categ")
-    fun getNotesByCategory(categ: String) : LiveData<List<Note>>
+    @Query("SELECT * FROM note_table WHERE title LIKE :searchQuery OR author LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String) : Flow<List<Note>>
 
-    @Query("SELECT category FROM note_table")
-    fun getNoteCategory() : LiveData<List<String>>
+
 }

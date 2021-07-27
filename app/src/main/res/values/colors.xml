@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="app_default_bg_color">#302D2D</color>
     <color name="bg_on_selected">#018786</color>
+    <color name="splash_screen_bg_color">#014A4A</color>
 </resources>

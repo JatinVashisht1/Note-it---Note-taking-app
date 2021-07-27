@@ -2,17 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
+
     <item
         android:title="Privacy Policy"
         android:id="@+id/privacy_policy"
         android:onClick="onClickPrivacyPolicy"
         />
 
-    <item
-        android:title="Add Category"
-        android:id="@+id/menu_add_category"
-        android:icon="@drawable/ic_add"
-        />
 
 
 

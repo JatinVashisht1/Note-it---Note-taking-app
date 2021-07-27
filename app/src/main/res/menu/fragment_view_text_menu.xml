@@ -5,7 +5,7 @@
     <item
         android:title="update"
         app:showAsAction="always"
-        android:id="@+id/update_nte"
+        android:id="@+id/update_note"
         />
 
 
