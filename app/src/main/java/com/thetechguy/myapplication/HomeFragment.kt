@@ -196,13 +196,42 @@ class HomeFragment : Fragment(R.layout.fragment_home), INotesRVAdapter{
 
                 R.id.deleteSelected -> {
                     isSelectedModeOn = false
+
                     if(checkedNotesToDelete.isEmpty()){
                         Toast.makeText(context, "Select an item to delete", Toast.LENGTH_SHORT).show()
                     }
-                    else if(checkedNotesToDelete.isNotEmpty()){
-                    viewModel.deleteSelectedNotes(checkedNotesToDelete.toList())
-                        checkedNotesToDelete.clear()
+                    else if(checkedNotesToDelete.isNotEmpty()) {
+                        val builder = AlertDialog.Builder(requireContext())
+                        //set title for alert dialog
+                        builder.setTitle("Alert")
+                        //set message for alert dialog
+                        builder.setMessage("Delete Selected notes?")
+                        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                        //performing positive action
+                        builder.setPositiveButton("Yes") { _, _ ->
+                            viewModel.deleteSelectedNotes(checkedNotesToDelete.toList())
+                            checkedNotesToDelete.clear()
+                            Toast.makeText(context, "Deleted selected notes!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        //performing cancel action
+                        builder.setNeutralButton("Cancel") { dialogInterface, which ->
+
+                        }
+                        //performing negative action
+                        builder.setNegativeButton("No") { dialogInterface, which ->
+
+                        }
+                        // Create the AlertDialog
+                        val alertDialog: AlertDialog = builder.create()
+                        // Set other dialog properties
+                        alertDialog.setCancelable(true)
+                        alertDialog.show()
                     }
+
+
+
                 }
 
                 R.id.delete_all_notes ->{

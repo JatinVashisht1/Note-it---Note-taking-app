@@ -15,15 +15,92 @@
         android:background="@color/teal_200"
         app:title="Note it"
         app:titleTextColor="@color/white"
+        android:textIsSelectable="true"
+        />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="This document describes data collected and processed by the Note it app and third party software. By using the app, user consents to the privacy policy."
+        android:textIsSelectable="true"
+        android:layout_marginTop="8dp"
+
         />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4sp"
+        android:layout_marginTop="16sp"
         android:id="@+id/text_view_privacy_policy"
+        android:text="1. Notes"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="All of the notes that user creates are stored in the app's internal storage. The notes can't be accessed by any other app on the phone. The only way to access the notes is to use the app. To be clear only user of the app can see notes stored on the phone."
+        android:textIsSelectable="true"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="2. Email Address"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:textIsSelectable="true"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="The official email address for the technical support is"
+        android:textIsSelectable="true"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/teal_200"
+        android:text="noteitnotepad@outlook.com"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+        android:id="@+id/noteit_email"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+        android:text="You can email to this email address to submit any query and problem. The email address will be used to answer any problem and question. Email addresses are not stored anywhere neither in phone or at any online server.
+"/>
+
+
+
+
+</LinearLayout>
 
 
 
